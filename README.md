@@ -2,7 +2,7 @@
 
 A simple and clean task management application built with React, TypeScript, and TailwindCSS.
 
-**[Live Demo](https://task-manager-flame-one.vercel.app/login)**
+**[Live Demo](https://task-manager-flame-one.vercel.app)**
 
 ## What it does
 - Login with any predefined/mocked credentials
