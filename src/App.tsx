@@ -3,9 +3,10 @@ import {
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
-import Login from './pages/Login'
+import Login from './pages/Login';
+import TaskList from './pages/TaskList';
 
 function App() {
   return (
@@ -13,11 +14,12 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<TaskList />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
