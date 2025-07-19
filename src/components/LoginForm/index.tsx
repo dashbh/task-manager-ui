@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 interface LoginFormProps {
-  onSubmit: (username: string, password: string) => Promise<void>
-  error: string
-  isLoading: boolean
+  onSubmit: (username: string, password: string) => Promise<void>;
+  error: string;
+  isLoading: boolean;
 }
 
 export default function LoginForm({
@@ -11,13 +11,13 @@ export default function LoginForm({
   error,
   isLoading,
 }: LoginFormProps) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    await onSubmit(username, password)
-  }
+    e.preventDefault();
+    await onSubmit(username, password);
+  };
 
   return (
     <div className="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-8 lg:px-10">
@@ -116,5 +116,5 @@ export default function LoginForm({
         </div>
       </div>
     </div>
-  )
+  );
 }

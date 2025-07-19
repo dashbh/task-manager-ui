@@ -21,7 +21,7 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
-      'prettier/prettier': ['error', { singleQuote: true, semi: false }],
+      'prettier/prettier': ['error', { singleQuote: true, semi: true }],
 
       // React
       'react/react-in-jsx-scope': 'off',

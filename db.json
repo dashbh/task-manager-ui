@@ -1,0 +1,74 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Complete UI Design",
+      "description": "Create a task manager UI",
+      "status": "In Progress",
+      "dueDate": "2025-03-30"
+    },
+    {
+      "id": "2",
+      "title": "Write Documentation",
+      "description": "Document the project setup and usage",
+      "status": "To-Do",
+      "dueDate": "2025-04-05"
+    },
+    {
+      "id": "3",
+      "title": "Setup Backend",
+      "description": "Initialize json-server with mock API",
+      "status": "Completed",
+      "dueDate": "2025-03-28"
+    },
+    {
+      "id": "4",
+      "title": "Implement Add Task",
+      "description": "Add form for creating new tasks",
+      "status": "In Progress",
+      "dueDate": "2025-04-01"
+    },
+    {
+      "id": "5",
+      "title": "Enable Edit Task",
+      "description": "Allow editing title and status",
+      "status": "To-Do",
+      "dueDate": "2025-04-03"
+    },
+    {
+      "id": "6",
+      "title": "Implement Delete Function",
+      "description": "Add confirmation and delete feature",
+      "status": "To-Do",
+      "dueDate": "2025-04-07"
+    },
+    {
+      "id": "7",
+      "title": "UI Clean up",
+      "description": "Clean up styles using Tailwind",
+      "status": "In Progress",
+      "dueDate": "2025-04-02"
+    },
+    {
+      "id": "8",
+      "title": "Handle API Errors",
+      "description": "Show error messages on fetch failure",
+      "status": "To-Do",
+      "dueDate": "2025-04-06"
+    },
+    {
+      "id": "9",
+      "title": "Refactor Components",
+      "description": "Break components into smaller ones",
+      "status": "Completed",
+      "dueDate": "2025-03-29"
+    },
+    {
+      "id": "10",
+      "title": "Deploy to Vercel",
+      "description": "Host the frontend on Vercel",
+      "status": "To-Do",
+      "dueDate": "2025-04-10"
+    }
+  ]
+}
