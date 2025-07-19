@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Login from './pages/Login';
-import TaskList from './pages/TaskList';
+import TaskManager from './pages/TaskManager';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<TaskList />} />
+          <Route path="/dashboard" element={<TaskManager />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
