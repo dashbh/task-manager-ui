@@ -3,7 +3,7 @@ import type { Task } from '../../types/types';
 type Props = {
   tasks: Task[];
   onEdit: (task: Task) => void;
-  onDelete: (taskId: string) => void;
+  onDelete: (task: Task) => void;
 };
 
 export default function TaskList({ tasks, onEdit, onDelete }: Props) {
@@ -73,7 +73,7 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
               </button>
               <button
                 className="text-red-600 text-sm hover:underline"
-                onClick={() => onDelete(task.id)}
+                onClick={() => onDelete(task)}
               >
                 Delete
               </button>
