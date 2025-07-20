@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 import type { Task } from '../types/types';
 
@@ -17,6 +17,7 @@ export function useGetTasks() {
       const res = await fetch(API_URL);
       const data = await res.json();
       setTasks(data);
+      //   toast.success('Task List Loaded', { duration: 1000 });
     } catch (err) {
       setError('Failed to fetch tasks');
       toast.error('Error loading tasks');

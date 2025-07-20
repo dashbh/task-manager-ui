@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { toast } from 'sonner';
 
-import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
-import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
+import { useCreateTask } from '../hooks/useCreateTask';
 import { useDeleteTask } from '../hooks/useDeleteTask';
 import { useGetTasks } from '../hooks/useGetTasks';
+import { useUpdateTask } from '../hooks/useUpdateTask';
 import type { Task } from '../types/types';
+
+const TaskForm = lazy(() => import('../components/TaskForm'));
+const ConfirmDeleteModal = lazy(
+  () => import('../components/ConfirmDeleteModal'),
+);
 
 function TaskManager() {
   const { tasks, loading, error, refetch } = useGetTasks();
   const deleteTask = useDeleteTask();
+  const updateTask = useUpdateTask();
+  const createTask = useCreateTask();
+
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -30,22 +38,14 @@ function TaskManager() {
   };
 
   const handleSubmit = async (formData: Omit<Task, 'id'>) => {
-    if (isEdit) {
-      await fetch(`http://localhost:3001/tasks/${selectedTask.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...selectedTask, ...formData }),
-      });
+    if (isEdit && selectedTask) {
+      await updateTask(selectedTask.id, formData);
       toast.success(`Task: ${selectedTask?.title} Updated`, {
         duration: 5000,
       });
     } else {
-      await fetch('http://localhost:3001/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      toast.success(`New Task: ${selectedTask?.title} Created`);
+      await createTask(formData);
+      toast.success(`New Task: ${formData?.title} Created`);
     }
 
     setModalOpen(false);
@@ -75,27 +75,19 @@ function TaskManager() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">
+    <main className="min-h-screen bg-gray-100 pt-8 md:p-20 flex flex-col items-center">
+      <div className="container mx-auto px-8">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-8">
           Task Manager
         </h1>
 
         <div className="flex gap-2 mb-6">
           <button
             onClick={handleAdd}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
           >
             Add Task
           </button>
-
-          <TaskForm
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
-            onSubmit={handleSubmit}
-            initialValues={selectedTask}
-            isEdit={isEdit}
-          />
         </div>
         <div>
           {loading && <p>Loading tasks...</p>}
@@ -111,12 +103,29 @@ function TaskManager() {
         </div>
       </div>
 
-      <ConfirmDeleteModal
-        isOpen={isDeleteOpen}
-        task={taskToDelete}
-        onCancel={() => setDeleteOpen(false)}
-        onConfirm={handleDelete}
-      />
+      {/* Task Form & Delete Confirmation Modal */}
+      <Suspense fallback={null}>
+        {isModalOpen && (
+          <TaskForm
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            onSubmit={handleSubmit}
+            initialValues={selectedTask}
+            isEdit={isEdit}
+          />
+        )}
+      </Suspense>
+
+      <Suspense fallback={null}>
+        {isDeleteOpen && (
+          <ConfirmDeleteModal
+            isOpen={isDeleteOpen}
+            task={taskToDelete}
+            onCancel={() => setDeleteOpen(false)}
+            onConfirm={handleDelete}
+          />
+        )}
+      </Suspense>
     </main>
   );
 }
