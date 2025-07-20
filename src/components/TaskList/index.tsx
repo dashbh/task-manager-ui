@@ -66,13 +66,13 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
             {/* Actions */}
             <div className="flex gap-3">
               <button
-                className="text-cyan-500 text-sm hover:underline"
+                className="text-cyan-500 text-sm hover:underline cursor-pointer"
                 onClick={() => onEdit(task)}
               >
                 Edit
               </button>
               <button
-                className="text-red-600 text-sm hover:underline"
+                className="text-red-600 text-sm hover:underline cursor-pointer"
                 onClick={() => onDelete(task)}
               >
                 Delete
