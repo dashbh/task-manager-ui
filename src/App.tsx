@@ -1,10 +1,10 @@
-import { Toaster } from 'react-hot-toast';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 import Login from './pages/Login';
 import TaskManager from './pages/TaskManager';
@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
 
-        <Toaster position="top-center" />
+        <Toaster position="top-right" richColors />
       </div>
     </Router>
   );

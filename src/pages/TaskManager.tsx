@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
+import { ConfirmDeleteModal } from '../components/ConfirmDeleteModal';
 import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
-import { setTasks } from '../store/actions';
-import { useTasks, useTaskDispatch } from '../store/selector';
+import { useDeleteTask } from '../hooks/useDeleteTask';
+import { useGetTasks } from '../hooks/useGetTasks';
 import type { Task } from '../types/types';
 
-export default function TaskManager() {
-  const tasks: Task[] = useTasks();
-  const dispatch = useTaskDispatch();
-  const [loading, setLoading] = useState(false);
-
+function TaskManager() {
+  const { tasks, loading, error, refetch } = useGetTasks();
+  const deleteTask = useDeleteTask();
+  const [isDeleteOpen, setDeleteOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -26,20 +27,6 @@ export default function TaskManager() {
     setSelectedTask(task);
     setIsEdit(true);
     setModalOpen(true);
-  };
-
-  const fetchTasks = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:3001/tasks');
-      const data = await res.json();
-      dispatch(setTasks(data));
-    } catch (err) {
-      toast.error('Failed to load tasks');
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSubmit = async (formData: Omit<Task, 'id'>) => {
@@ -64,28 +51,28 @@ export default function TaskManager() {
     setModalOpen(false);
     setIsEdit(false);
     setSelectedTask(null);
-    fetchTasks();
+    refetch();
   };
 
-  const handleDelete = async (taskId: string) => {
-    try {
-      setLoading(true);
-      await fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: 'DELETE',
-      });
-      toast.success('Task deleted');
-      fetchTasks();
-    } catch (error) {
-      toast.error('Failed to delete task');
-      console.log(error);
-    } finally {
-      setLoading(false);
+  const openDeleteModal = (task: Task) => {
+    setTaskToDelete(task);
+    setDeleteOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (taskToDelete) {
+      try {
+        await deleteTask(taskToDelete.id);
+        toast.success(`Deleted: ${taskToDelete.title}`);
+        refetch();
+      } catch (error) {
+        toast.success(`Deleted: ${taskToDelete.title}`);
+        console.log(error);
+      } finally {
+        setDeleteOpen(false);
+      }
     }
   };
-
-  useEffect(() => {
-    fetchTasks();
-  }, [dispatch]);
 
   return (
     <main className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
@@ -111,17 +98,27 @@ export default function TaskManager() {
           />
         </div>
         <div>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
+          {loading && <p>Loading tasks...</p>}
+          {error && <p className="text-red-500">{error}</p>}
+
+          {tasks && tasks.length > 0 && (
             <TaskList
               tasks={tasks}
               onEdit={handleEdit}
-              onDelete={handleDelete}
+              onDelete={openDeleteModal}
             />
           )}
         </div>
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={isDeleteOpen}
+        task={taskToDelete}
+        onCancel={() => setDeleteOpen(false)}
+        onConfirm={handleDelete}
+      />
     </main>
   );
 }
+
+export default TaskManager;
