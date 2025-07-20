@@ -2,13 +2,15 @@ import type { Task } from '../../types/types';
 
 type Props = {
   tasks: Task[];
+  onEdit: (task: Task) => void;
+  onDelete: (taskId: string) => void;
 };
 
-export default function TaskList({ tasks }: Props) {
+export default function TaskList({ tasks, onEdit, onDelete }: Props) {
   return (
     <div className="w-full">
       {/* MD+ */}
-      <div className="mb-2 hidden md:grid grid-cols-5 gap-4 px-4 py-4 bg-sky-50 text-sm font-semibold text-gray-700 border border-gray-200">
+      <div className="mb-2 hidden md:grid grid-cols-5 gap-4 px-4 py-4 bg-gray-300 text-sm font-bold text-gray-700 border border-gray-300">
         <span>Title</span>
         <span>Description</span>
         <span>Status</span>
@@ -63,10 +65,16 @@ export default function TaskList({ tasks }: Props) {
 
             {/* Actions */}
             <div className="flex gap-3">
-              <button className="text-cyan-500 text-sm hover:underline">
+              <button
+                className="text-cyan-500 text-sm hover:underline"
+                onClick={() => onEdit(task)}
+              >
                 Edit
               </button>
-              <button className="text-red-600 text-sm hover:underline">
+              <button
+                className="text-red-600 text-sm hover:underline"
+                onClick={() => onDelete(task.id)}
+              >
                 Delete
               </button>
             </div>

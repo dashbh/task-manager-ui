@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,6 +18,8 @@ function App() {
           <Route path="/dashboard" element={<TaskManager />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
+
+        <Toaster position="top-center" />
       </div>
     </Router>
   );
