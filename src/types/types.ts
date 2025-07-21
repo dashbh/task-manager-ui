@@ -4,6 +4,7 @@ export type Task = {
   description: string;
   status: 'To-Do' | 'In Progress' | 'Completed';
   dueDate: string;
+  createdDate?: number;
 };
 
 export type TaskAction =

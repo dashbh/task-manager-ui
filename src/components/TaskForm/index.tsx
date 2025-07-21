@@ -74,6 +74,7 @@ export default function TaskForm({
           <textarea
             name="description"
             value={form.description}
+            maxLength={300}
             onChange={handleChange}
             required
             placeholder="Description"

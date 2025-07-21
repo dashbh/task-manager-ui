@@ -4,6 +4,7 @@ import { API_URL } from './config';
 
 export const useCreateTask = () => {
   return async (formData: Omit<Task, 'id'>) => {
+    formData.createdDate = Date.now();
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

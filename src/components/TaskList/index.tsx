@@ -1,86 +1,88 @@
-import type { Task } from '../../types/types';
+import { useRef, useEffect } from 'react';
 
+import type { Task } from '../../types/types';
+import TaskCard from '../TaskCard';
 type Props = {
   tasks: Task[];
   onEdit: (task: Task) => void;
   onDelete: (task: Task) => void;
+  onLoadMore: () => void;
+  hasMore: boolean;
+  loading: boolean;
 };
 
-export default function TaskList({ tasks, onEdit, onDelete }: Props) {
-  return (
-    <div className="w-full">
-      {/* MD+ */}
-      <div className="mb-2 hidden md:grid grid-cols-5 gap-4 px-4 py-4 bg-gray-300 text-sm font-bold text-gray-700 border border-gray-300">
-        <span>Title</span>
-        <span>Description</span>
-        <span>Status</span>
-        <span>Due Date</span>
-        <span>Actions</span>
-      </div>
+const useIntersectionObserver = (callback: () => void, options = {}) => {
+  const targetRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          callback();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px',
+        ...options,
+      },
+    );
+
+    observer.observe(target);
+
+    return () => observer.unobserve(target);
+  }, [callback]);
+
+  return targetRef;
+};
+
+export default function TaskList({
+  tasks,
+  onEdit,
+  onDelete,
+  onLoadMore,
+  hasMore,
+  loading,
+}: Props) {
+  const loadMoreRef = useIntersectionObserver(onLoadMore, {
+    threshold: 0.1,
+    rootMargin: '0px',
+  });
+
+  return (
+    <div className="w-full p-2 bg-gray-200">
       <div className="space-y-4 md:space-y-2">
         {tasks.map((task) => (
-          <div
+          <TaskCard
             key={task.id}
-            className="md:items-center flex flex-col md:grid md:grid-cols-5 gap-2 md:gap-4 px-4 py-3 bg-white hover:bg-gray-50 transition rounded-lg shadow-sm"
-          >
-            {/* Title */}
-            <div>
-              <div className="text-sm text-gray-900 font-medium">
-                {task.title}
-              </div>
-            </div>
-
-            {/* Description */}
-            <div>
-              <div className="md:hidden text-xs text-gray-500">Description</div>
-              <div className="text-sm text-gray-700">{task.description}</div>
-            </div>
-
-            {/* Status */}
-            <div>
-              <span className="md:hidden text-xs text-gray-500 mr-2">
-                Status
-              </span>
-              <span
-                className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                  task.status === 'Completed'
-                    ? 'bg-green-100 text-green-700'
-                    : task.status === 'In Progress'
-                      ? 'bg-yellow-100 text-yellow-700'
-                      : 'bg-gray-100 text-gray-700'
-                }`}
-              >
-                {task.status}
-              </span>
-            </div>
-
-            {/* Due Date */}
-            <div>
-              <span className="md:hidden text-xs text-gray-500 mr-2">
-                Due Date
-              </span>
-              <span className="text-sm text-gray-600">{task.dueDate}</span>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-3">
-              <button
-                className="text-cyan-500 text-sm hover:underline cursor-pointer"
-                onClick={() => onEdit(task)}
-              >
-                Edit
-              </button>
-              <button
-                className="text-red-600 text-sm hover:underline cursor-pointer"
-                onClick={() => onDelete(task)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
+            task={task}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
         ))}
       </div>
+
+      {hasMore && tasks.length > 0 && (
+        <div ref={loadMoreRef} className="flex justify-center py-4 md:py-8">
+          <div className="text-gray-500 text-sm">
+            {loading ? 'Loading more tasks...' : 'Scroll for more tasks'}
+          </div>
+        </div>
+      )}
+
+      {loading && tasks.length === 0 && (
+        <div className="flex justify-center py-4 md:py-8">
+          <div className="text-gray-500 text-sm">Loading tasks...</div>
+        </div>
+      )}
+      {!hasMore && (
+        <div className="flex justify-center py-4 md:py-8">
+          <div className="text-gray-500 text-sm">- Complete -</div>
+        </div>
+      )}
     </div>
   );
 }
