@@ -14,7 +14,7 @@ const ConfirmDeleteModal = lazy(
 );
 
 function TaskManager() {
-  const { tasks, loading, error, refetch } = useGetTasks();
+  const { tasks, loading, error, refetch, loadMore, hasMore } = useGetTasks();
   const deleteTask = useDeleteTask();
   const updateTask = useUpdateTask();
   const createTask = useCreateTask();
@@ -40,9 +40,7 @@ function TaskManager() {
   const handleSubmit = async (formData: Omit<Task, 'id'>) => {
     if (isEdit && selectedTask) {
       await updateTask(selectedTask.id, formData);
-      toast.success(`Task: ${selectedTask?.title} Updated`, {
-        duration: 5000,
-      });
+      toast.success(`Task: ${selectedTask?.title} Updated`);
     } else {
       await createTask(formData);
       toast.success(`New Task: ${formData?.title} Created`);
@@ -75,34 +73,46 @@ function TaskManager() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 pt-8 md:p-20 flex flex-col items-center">
+    <main className="min-h-screen bg-white pt-8 md:p-20 flex flex-col items-center">
       <div className="container mx-auto px-8">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-8">
-          Task Manager
-        </h1>
+        <div className="sticky top-0 z-10 bg-white pb-0 pt-6 border-b-1 border-gray-300">
+          <h1 className="text-2xl font-semibold text-gray-800 mb-8">
+            Task Manager
+          </h1>
 
-        <div className="flex gap-2 mb-6">
-          <button
-            onClick={handleAdd}
-            className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
-          >
-            Add Task
-          </button>
-        </div>
-        <div>
-          {loading && <p>Loading tasks...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-          <div className="text-right text-lg text-green-700 py-2">
-            Total Rows: {tasks.length}
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={handleAdd}
+              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+            >
+              Add Task
+            </button>
           </div>
-          {tasks && tasks.length > 0 && (
-            <TaskList
-              tasks={tasks}
-              onEdit={handleEdit}
-              onDelete={openDeleteModal}
-            />
-          )}
+
+          <div>
+            {error && <p className="text-red-500">{error}</p>}
+            <div className="text-right text-lg text-green-700 py-2">
+              Total Rows: {tasks.length}
+            </div>
+          </div>
+
+          <div className="hidden md:grid grid-cols-5 gap-4 px-4 py-4 bg-gray-200 text-sm font-bold text-gray-700 border border-gray-300">
+            <span>Title</span>
+            <span>Description</span>
+            <span>Status</span>
+            <span>Due Date</span>
+            <span>Actions</span>
+          </div>
         </div>
+
+        <TaskList
+          tasks={tasks}
+          onEdit={handleEdit}
+          onDelete={openDeleteModal}
+          onLoadMore={loadMore}
+          hasMore={hasMore}
+          loading={loading}
+        />
       </div>
 
       {/* Task Form & Delete Confirmation Modal */}

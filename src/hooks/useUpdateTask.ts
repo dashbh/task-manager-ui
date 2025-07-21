@@ -4,6 +4,7 @@ import { API_URL } from './config';
 
 export const useUpdateTask = () => {
   return async (id: string, formData: Partial<Task>) => {
+    formData.createdDate = Date.now();
     const res = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
