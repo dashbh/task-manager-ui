@@ -53,7 +53,7 @@ export default function TaskList({
   });
 
   return (
-    <div className="w-full p-2 bg-gray-200">
+    <div className="w-full p-4 bg-gray-200">
       <div className="space-y-4 md:space-y-2">
         {tasks.map((task) => (
           <TaskCard
