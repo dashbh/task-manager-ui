@@ -2,8 +2,6 @@
 
 A simple and clean task management application built with React, TypeScript, and TailwindCSS.
 
-**[Live Demo](https://task-manager-ebon-one.vercel.app)**
-
 ## What it does
 - Login with any predefined/mocked credentials
 - Create, edit, and delete tasks
