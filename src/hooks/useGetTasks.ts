@@ -10,13 +10,15 @@ export function useGetTasks() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (page: number = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(
+        `${API_URL}?_page=${page}&_per_page=7&_sort=dueDate`,
+      );
       const data = await res.json();
-      setTasks(data);
+      setTasks(data?.data);
       //   toast.success('Task List Loaded', { duration: 1000 });
     } catch (err) {
       setError('Failed to fetch tasks');

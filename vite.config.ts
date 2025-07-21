@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from 'path';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -16,5 +18,10 @@ export default defineConfig({
     watch: {
       ignored: ['**/db.json'],
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
   },
 });

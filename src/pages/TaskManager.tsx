@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense, useCallback } from 'react';
 import { toast } from 'sonner';
 
 import TaskList from '../components/TaskList';
@@ -31,11 +31,11 @@ function TaskManager() {
     setModalOpen(true);
   };
 
-  const handleEdit = (task: Task) => {
+  const handleEdit = useCallback((task: Task) => {
     setSelectedTask(task);
     setIsEdit(true);
     setModalOpen(true);
-  };
+  }, []);
 
   const handleSubmit = async (formData: Omit<Task, 'id'>) => {
     if (isEdit && selectedTask) {
@@ -54,10 +54,10 @@ function TaskManager() {
     refetch();
   };
 
-  const openDeleteModal = (task: Task) => {
+  const openDeleteModal = useCallback((task: Task) => {
     setTaskToDelete(task);
     setDeleteOpen(true);
-  };
+  }, []);
 
   const handleDelete = async () => {
     if (taskToDelete) {
@@ -92,7 +92,9 @@ function TaskManager() {
         <div>
           {loading && <p>Loading tasks...</p>}
           {error && <p className="text-red-500">{error}</p>}
-
+          <div className="text-right text-lg text-green-700 py-2">
+            Total Rows: {tasks.length}
+          </div>
           {tasks && tasks.length > 0 && (
             <TaskList
               tasks={tasks}
