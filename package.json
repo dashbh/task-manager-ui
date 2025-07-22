@@ -8,7 +8,7 @@
     "json-server": "json-server --watch db.json --port 3001",
     "build": "tsc -b && vite build",
     "lint": "eslint . --fix",
-    "preview": "vite preview",
+    "preview": "concurrently \"vite preview\" \"npm run json-server\"",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:watch": "vitest --watch"
