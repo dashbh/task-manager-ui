@@ -51,10 +51,11 @@ export function useGetTasks() {
   const refetch = useCallback(() => {
     setCurrentPage(1);
     shouldTriggerFetch.current = true;
+    fetchTasks(true);
   }, []);
 
   useEffect(() => {
-    if (shouldTriggerFetch.current) {
+    if (shouldTriggerFetch.current && currentPage === 1) {
       fetchTasks(true);
       shouldTriggerFetch.current = false;
     } else {
