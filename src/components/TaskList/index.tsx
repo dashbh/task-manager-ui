@@ -67,7 +67,7 @@ export default function TaskList({
 
       {hasMore && tasks.length > 0 && (
         <div ref={loadMoreRef} className="flex justify-center py-4 md:py-8">
-          <div className="text-gray-500 text-sm">
+          <div className="text-gray-700 text-sm">
             {loading ? 'Loading more tasks...' : 'Scroll for more tasks'}
           </div>
         </div>
@@ -75,12 +75,12 @@ export default function TaskList({
 
       {loading && tasks.length === 0 && (
         <div className="flex justify-center py-4 md:py-8">
-          <div className="text-gray-500 text-sm">Loading tasks...</div>
+          <div className="text-gray-700 text-sm">Loading tasks...</div>
         </div>
       )}
       {!hasMore && (
         <div className="flex justify-center py-4 md:py-8">
-          <div className="text-gray-500 text-sm">- Complete -</div>
+          <div className="text-gray-700 text-sm">- Complete -</div>
         </div>
       )}
     </div>

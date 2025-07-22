@@ -82,6 +82,7 @@ export default function TaskForm({
           />
           <select
             name="status"
+            aria-label="Status"
             value={form.status}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded px-3 py-2"
@@ -93,6 +94,7 @@ export default function TaskForm({
           <input
             type="date"
             name="dueDate"
+            aria-label="Due Date"
             required
             value={form.dueDate}
             onChange={handleChange}

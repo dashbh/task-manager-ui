@@ -22,9 +22,9 @@ export default function LoginForm({
   return (
     <div className="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-8 lg:px-10">
       <div className="mx-auto w-full max-w-sm">
-        <h2 className="text-center text-2xl font-bold tracking-tight text-primary">
+        <h1 className="text-center text-2xl font-bold tracking-tight text-primary">
           Sign in to your account
-        </h2>
+        </h1>
 
         {error && (
           <div className="mt-6 rounded bg-red-100 p-3 text-sm text-red-800">
@@ -84,31 +84,31 @@ export default function LoginForm({
 
         <div className="mt-10 text-center">
           <p className="text-sm text-gray-500 mb-2">Demo credentials:</p>
-          <div className="space-y-1 text-xs text-gray-400">
+          <div className="space-y-1 text-xs text-gray-100">
             <p>
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 admin
               </span>
               {' / '}
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 admin123
               </span>
             </p>
             <p>
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 demo
               </span>
               {' / '}
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 demo123
               </span>
             </p>
             <p>
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 user
               </span>
               {' / '}
-              <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">
+              <span className="font-mono bg-gray-700 px-2 py-0.5 rounded">
                 password
               </span>
             </p>

@@ -3,11 +3,15 @@ import { vi, describe, it, expect } from 'vitest';
 
 import { Modal } from '.';
 
+vi.mock('focus-trap-react', () => ({
+  FocusTrap: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 describe('Modal', () => {
   it('Modal -> isOpen is false', () => {
     const { container } = render(
       <Modal isOpen={false} onClose={() => {}}>
-        <div>Hidden Content</div>
+        <div>Focusable inside modal</div>
       </Modal>,
     );
 
@@ -17,7 +21,7 @@ describe('Modal', () => {
   it('Modal -> isOpen is true', () => {
     render(
       <Modal isOpen={true} onClose={() => {}} title="Test Modal">
-        <div>Modal Content</div>
+        <div autoFocus>Modal Content</div>
       </Modal>,
     );
 
@@ -30,7 +34,7 @@ describe('Modal', () => {
 
     render(
       <Modal isOpen={true} onClose={onClose}>
-        <div>Close Test</div>
+        <div tabIndex={0}>Modal Content</div>
       </Modal>,
     );
 

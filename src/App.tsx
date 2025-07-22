@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
+import ProtectedRoute from './components/common/ProtectedRoute';
 import Login from './pages/Login';
 import TaskManager from './pages/TaskManager';
 
@@ -15,7 +16,14 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<TaskManager />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <TaskManager />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
 

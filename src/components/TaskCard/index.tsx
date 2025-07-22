@@ -12,7 +12,7 @@ function TaskCard({ task, onEdit, onDelete }: Props) {
   console.log(`Rendered - Task ${task.id}`);
 
   return (
-    <div
+    <article
       key={task.id}
       className="md:items-center flex flex-col md:grid md:grid-cols-5 gap-2 md:gap-4 px-4 py-3 bg-white hover:bg-gray-50 transition rounded-lg shadow-sm"
     >
@@ -58,19 +58,21 @@ function TaskCard({ task, onEdit, onDelete }: Props) {
       {/* Actions */}
       <div className="flex gap-3">
         <button
-          className="text-cyan-500 text-sm hover:underline cursor-pointer"
+          className="text-teal-700 text-sm hover:underline cursor-pointer"
           onClick={() => onEdit(task)}
+          aria-label={`Edit ${task.title}`}
         >
           Edit
         </button>
         <button
           className="text-red-600 text-sm hover:underline cursor-pointer"
           onClick={() => onDelete(task)}
+          aria-label={`Delete ${task.title}`}
         >
           Delete
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 
