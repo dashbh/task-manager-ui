@@ -37,6 +37,8 @@ export default function Login() {
   };
 
   return (
-    <LoginForm onSubmit={handleLogin} error={error} isLoading={isLoading} />
+    <main>
+      <LoginForm onSubmit={handleLogin} error={error} isLoading={isLoading} />
+    </main>
   );
 }

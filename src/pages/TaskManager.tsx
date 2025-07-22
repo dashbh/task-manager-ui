@@ -73,25 +73,29 @@ function TaskManager() {
   };
 
   return (
-    <main className="min-h-screen bg-white pt-8 md:p-20 flex flex-col items-center">
-      <div className="container mx-auto px-8">
+    <main className="min-h-screen bg-white pt-4 md:p-20 flex flex-col items-center">
+      <div className="container mx-auto">
         <div className="sticky top-0 z-10 bg-white pb-0 pt-6 border-b-1 border-gray-300">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-8">
+          <h1 className="text-2xl font-semibold text-gray-800 mb-2 md:mb-8 px-4 md:px-0">
             Task Manager
           </h1>
 
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-2 mb-4 px-4 md:px-0">
             <button
               onClick={handleAdd}
-              className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+              className="bg-blue-600 text-xs md:text-md text-white px-4 py-2 rounded cursor-pointer"
             >
               Add Task
             </button>
           </div>
 
-          <div>
-            {error && <p className="text-red-500">{error}</p>}
-            <div className="text-right text-lg text-green-700 py-2">
+          <div className="px-4 md:px-0 text-right">
+            {error && (
+              <div className="text-sm md:text-lg text-red-500 py-2">
+                {error}
+              </div>
+            )}
+            <div className="text-sm md:text-lg text-green-700 py-2">
               Total Rows: {tasks.length}
             </div>
           </div>

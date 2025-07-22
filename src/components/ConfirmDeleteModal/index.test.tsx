@@ -5,6 +5,10 @@ import type { Task } from '../../types/types';
 
 import ConfirmDeleteModal from '.';
 
+vi.mock('focus-trap-react', () => ({
+  FocusTrap: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 describe('ConfirmDeleteModal', () => {
   const task: Task = {
     id: '1',
