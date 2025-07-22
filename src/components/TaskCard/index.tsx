@@ -14,7 +14,7 @@ function TaskCard({ task, onEdit, onDelete }: Props) {
   return (
     <article
       key={task.id}
-      className="md:items-center flex flex-col md:grid md:grid-cols-5 gap-2 md:gap-4 px-4 py-3 bg-white hover:bg-gray-50 transition rounded-lg shadow-sm"
+      className="min-h-[150px] md:min-h-[90px] md:items-center flex flex-col md:grid md:grid-cols-5 gap-2 md:gap-4 px-4 py-3 bg-white hover:bg-gray-50 transition rounded-lg shadow-sm"
     >
       {/* Title */}
       <div>

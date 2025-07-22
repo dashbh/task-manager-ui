@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense, useCallback } from 'react';
 import { toast } from 'sonner';
 
+import Loader from '../components/common/Loader';
 import TaskList from '../components/TaskList';
 import { useCreateTask } from '../hooks/useCreateTask';
 import { useDeleteTask } from '../hooks/useDeleteTask';
@@ -96,7 +97,7 @@ function TaskManager() {
               </div>
             )}
             <div className="text-sm md:text-lg text-green-700 py-2">
-              Total Rows: {tasks.length}
+              {loading && <Loader inline />} &nbsp; Total Rows: {tasks.length}
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 import type { Task } from '../../types/types';
+import TaskCardSkeleton from '../common/TaskSkeleton';
 import TaskCard from '../TaskCard';
 type Props = {
   tasks: Task[];
@@ -54,15 +55,24 @@ export default function TaskList({
 
   return (
     <div className="w-full p-4 bg-gray-200">
-      <div className="space-y-4 md:space-y-2">
-        {tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onDelete={onDelete}
-            onEdit={onEdit}
-          />
-        ))}
+      <div
+        className="space-y-4 md:space-y-2"
+        role="region"
+        aria-label="Task List"
+      >
+        {loading && tasks.length === 0
+          ? // Show 5 skeleton cards only on initial load
+            Array.from({ length: 10 }).map((_, idx) => (
+              <TaskCardSkeleton key={idx} />
+            ))
+          : tasks.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onDelete={onDelete}
+                onEdit={onEdit}
+              />
+            ))}
       </div>
 
       {hasMore && tasks.length > 0 && (
